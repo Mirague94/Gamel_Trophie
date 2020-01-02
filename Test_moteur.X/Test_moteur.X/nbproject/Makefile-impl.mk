@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Programme_Gamel.X
+PROJECTNAME=Test_moteur.X
 
 # Active Configuration
 DEFAULTCONF=default
