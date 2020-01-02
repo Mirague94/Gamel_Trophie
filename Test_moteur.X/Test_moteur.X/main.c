@@ -9,7 +9,6 @@
 #include "iut_adc.h"
 #include "iut_lcd.h"
 #include "iut_pwm.h"
-#include "iut_timers.h"
 
 void main(void) {
     
@@ -43,19 +42,6 @@ void main(void) {
         {
             etat=2;
         }
-        
-        if ((n1<200)&& (n4>200))
-        {
-            OpenTimer0( TIMER_INT_ON &
-                        T0_16BIT &
-                        T0_SOURCE_INT &
-                        T0_PS_1_256);
-        }
-        /*
-         * if ((n1<200) && (n4<200))
-        {
-            CloseTimer0();
-        }*/
         
         switch (etat)
         {
@@ -136,14 +122,10 @@ void main(void) {
                 if (n3 < 600) etat=24;
                 break;
                 
-                //raccourci
-            case 31 :
-                pwm_setdc1(000*Vitesse);
-                pwm_setdc2(000*Vitesse);
          }
 
         // affiche les données des capteurs
-        
+        lcd_clear();
         lcd_position(0,0);
         lcd_printf("%3d %3d %3d %3d",n1,n2,n3,n4); // Capteur Centre Gauche
         lcd_position(1,0);
