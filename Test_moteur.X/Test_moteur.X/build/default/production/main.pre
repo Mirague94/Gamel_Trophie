@@ -4841,37 +4841,7 @@ void pwm_setdc1(unsigned int cycles_etat_haut);
 # 78
 void pwm_setdc2(unsigned int cycles_etat_haut);
 
-# 18 "iut_timers.h"
-union Timers
-{
-unsigned int lt;
-char bt[2];
-};
-
-# 55
-void OpenTimer0 ( unsigned char config);
-void CloseTimer0 (void);
-unsigned int ReadTimer0 (void);
-void WriteTimer0 ( unsigned int timer0);
-
-# 78
-void OpenTimer1 ( unsigned char config);
-void CloseTimer1 (void);
-unsigned int ReadTimer1 (void);
-void WriteTimer1 ( unsigned int timer1);
-
-# 108
-void OpenTimer2 ( unsigned char config);
-void CloseTimer2 (void);
-unsigned char ReadTimer2 (void);
-
-# 138
-void OpenTimer3 ( unsigned char config);
-void CloseTimer3 (void);
-unsigned int ReadTimer3 (void);
-void WriteTimer3 ( unsigned int timer3);
-
-# 14 "main.c"
+# 13 "main.c"
 void main(void) {
 
 int n1,n2,n3,n4;
@@ -4879,8 +4849,7 @@ adc_init(5);
 lcd_init();
 int finDeCourse=1, debutDeCourse;
 double moteurG, moteurD;
-int vitesseMax = 180;
-int timer;
+int vitesseMax = 200;
 
 TRISEbits.TRISE1 = 1;
 TRISEbits.TRISE2 = 1;
@@ -4899,31 +4868,6 @@ finDeCourse = PORTEbits.RE2;
 if (debutDeCourse == 1)
 {
 pwm_init (150,2);
-}
-
-if ((n1<200)&& (n4>200))
-{
-OpenTimer0( 0b11111111 &
-0b10111111 &
-0b11011111 &
-0b11110111);
-}
-
-while ((ReadTimer0()>3750) || ((n2>400) && (n3>400))) ;
-{
-CloseTimer0();
-timer=ReadTimer0();
-n2=adc_read(3);
-n3=adc_read(4);
-pwm_setdc1(0);
-pwm_setdc2(180);
-
-lcd_position(0,0);
-lcd_printf("%3d %7d %3d",n1,n2,n3,n4);
-lcd_position(1,0);
-lcd_printf("MG %4d",(int) moteurG);
-lcd_position(1,8);
-lcd_printf("MD %4d",(int) moteurD);
 }
 
 moteurG = vitesseMax * (1023-(double)n3)/1024;

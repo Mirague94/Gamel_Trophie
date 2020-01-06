@@ -39,13 +39,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PORTEbits `VS115 ~T0 @X0 0 e@3972 ]
 "50 iut_pwm.h
 [v _pwm_init `(v ~T0 @X0 0 ef2`uc`uc ]
-"55 iut_timers.h
-[v _OpenTimer0 `(v ~T0 @X0 0 ef1`uc ]
-"57
-[v _ReadTimer0 `(ui ~T0 @X0 0 ef ]
-"56
-[v _CloseTimer0 `(v ~T0 @X0 0 ef ]
-"67 iut_pwm.h
+"67
 [v _pwm_setdc1 `(v ~T0 @X0 0 ef1`ui ]
 "78
 [v _pwm_setdc2 `(v ~T0 @X0 0 ef1`ui ]
@@ -3577,249 +3571,158 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;iut_pwm.h: 50: void pwm_init(unsigned char period, char nb_canaux);
 [; ;iut_pwm.h: 67: void pwm_setdc1(unsigned int cycles_etat_haut);
 [; ;iut_pwm.h: 78: void pwm_setdc2(unsigned int cycles_etat_haut);
-[; ;iut_timers.h: 18: union Timers
-[; ;iut_timers.h: 19: {
-[; ;iut_timers.h: 20: unsigned int lt;
-[; ;iut_timers.h: 21: char bt[2];
-[; ;iut_timers.h: 22: };
-[; ;iut_timers.h: 55: void OpenTimer0 ( unsigned char config);
-[; ;iut_timers.h: 56: void CloseTimer0 (void);
-[; ;iut_timers.h: 57: unsigned int ReadTimer0 (void);
-[; ;iut_timers.h: 58: void WriteTimer0 ( unsigned int timer0);
-[; ;iut_timers.h: 78: void OpenTimer1 ( unsigned char config);
-[; ;iut_timers.h: 79: void CloseTimer1 (void);
-[; ;iut_timers.h: 80: unsigned int ReadTimer1 (void);
-[; ;iut_timers.h: 81: void WriteTimer1 ( unsigned int timer1);
-[; ;iut_timers.h: 108: void OpenTimer2 ( unsigned char config);
-[; ;iut_timers.h: 109: void CloseTimer2 (void);
-[; ;iut_timers.h: 110: unsigned char ReadTimer2 (void);
-[; ;iut_timers.h: 138: void OpenTimer3 ( unsigned char config);
-[; ;iut_timers.h: 139: void CloseTimer3 (void);
-[; ;iut_timers.h: 140: unsigned int ReadTimer3 (void);
-[; ;iut_timers.h: 141: void WriteTimer3 ( unsigned int timer3);
 [v $root$_main `(v ~T0 @X0 0 e ]
-"14 main.c
+"13 main.c
 [v _main `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 14: void main(void) {
+[; ;main.c: 13: void main(void) {
 [e :U _main ]
 [f ]
-"16
+"15
 [v _n1 `i ~T0 @X0 1 a ]
 [v _n2 `i ~T0 @X0 1 a ]
 [v _n3 `i ~T0 @X0 1 a ]
 [v _n4 `i ~T0 @X0 1 a ]
-[; ;main.c: 16: int n1,n2,n3,n4;
-[; ;main.c: 17: adc_init(5);
-"17
+[; ;main.c: 15: int n1,n2,n3,n4;
+[; ;main.c: 16: adc_init(5);
+"16
 [e ( _adc_init (1 -> -> 5 `i `uc ]
-[; ;main.c: 18: lcd_init();
-"18
+[; ;main.c: 17: lcd_init();
+"17
 [e ( _lcd_init ..  ]
-"19
+"18
 [v _finDeCourse `i ~T0 @X0 1 a ]
-[; ;main.c: 19: int finDeCourse=1, debutDeCourse;
+[; ;main.c: 18: int finDeCourse=1, debutDeCourse;
 [e = _finDeCourse -> 1 `i ]
 [v _debutDeCourse `i ~T0 @X0 1 a ]
-"20
+"19
 [v _moteurG `d ~T0 @X0 1 a ]
 [v _moteurD `d ~T0 @X0 1 a ]
-"21
+"20
 [v _vitesseMax `i ~T0 @X0 1 a ]
-[; ;main.c: 20: double moteurG, moteurD;
-[; ;main.c: 21: int vitesseMax = 180;
-[e = _vitesseMax -> 180 `i ]
+[; ;main.c: 19: double moteurG, moteurD;
+[; ;main.c: 20: int vitesseMax = 200;
+[e = _vitesseMax -> 200 `i ]
+[; ;main.c: 22: TRISEbits.TRISE1 = 1;
 "22
-[v _timer `i ~T0 @X0 1 a ]
-[; ;main.c: 22: int timer;
-[; ;main.c: 24: TRISEbits.TRISE1 = 1;
-"24
 [e = . . _TRISEbits 0 1 -> -> 1 `i `uc ]
-[; ;main.c: 25: TRISEbits.TRISE2 = 1;
-"25
+[; ;main.c: 23: TRISEbits.TRISE2 = 1;
+"23
 [e = . . _TRISEbits 0 2 -> -> 1 `i `uc ]
-[; ;main.c: 28: while(1)
+[; ;main.c: 26: while(1)
+"26
+[e :U 364 ]
+[; ;main.c: 27: {
+"27
+{
+[; ;main.c: 28: n1=adc_read(1);
 "28
-[e :U 365 ]
-[; ;main.c: 29: {
-"29
-{
-[; ;main.c: 30: n1=adc_read(1);
-"30
 [e = _n1 ( _adc_read (1 -> -> 1 `i `uc ]
-[; ;main.c: 31: n2=adc_read(3);
-"31
+[; ;main.c: 29: n2=adc_read(3);
+"29
 [e = _n2 ( _adc_read (1 -> -> 3 `i `uc ]
-[; ;main.c: 32: n3=adc_read(4);
-"32
+[; ;main.c: 30: n3=adc_read(4);
+"30
 [e = _n3 ( _adc_read (1 -> -> 4 `i `uc ]
-[; ;main.c: 33: n4=adc_read(5);
-"33
+[; ;main.c: 31: n4=adc_read(5);
+"31
 [e = _n4 ( _adc_read (1 -> -> 5 `i `uc ]
-[; ;main.c: 35: debutDeCourse = PORTEbits.RE1;
-"35
+[; ;main.c: 33: debutDeCourse = PORTEbits.RE1;
+"33
 [e = _debutDeCourse -> . . _PORTEbits 0 1 `i ]
-[; ;main.c: 36: finDeCourse = PORTEbits.RE2;
-"36
+[; ;main.c: 34: finDeCourse = PORTEbits.RE2;
+"34
 [e = _finDeCourse -> . . _PORTEbits 0 2 `i ]
-[; ;main.c: 38: if (debutDeCourse == 1)
-"38
-[e $ ! == _debutDeCourse -> 1 `i 367  ]
-[; ;main.c: 39: {
-"39
+[; ;main.c: 36: if (debutDeCourse == 1)
+"36
+[e $ ! == _debutDeCourse -> 1 `i 366  ]
+[; ;main.c: 37: {
+"37
 {
-[; ;main.c: 40: pwm_init (150,2);
-"40
+[; ;main.c: 38: pwm_init (150,2);
+"38
 [e ( _pwm_init (2 , -> -> 150 `i `uc -> -> 2 `i `uc ]
+"39
+}
+[e :U 366 ]
+[; ;main.c: 39: }
+[; ;main.c: 41: moteurG = vitesseMax * (1023-(double)n3)/1024;
 "41
+[e = _moteurG / * -> _vitesseMax `d - -> -> 1023 `i `d -> _n3 `d -> -> 1024 `i `d ]
+[; ;main.c: 42: moteurD = vitesseMax * (1023-(double)n2)/1024;
+"42
+[e = _moteurD / * -> _vitesseMax `d - -> -> 1023 `i `d -> _n2 `d -> -> 1024 `i `d ]
+[; ;main.c: 44: pwm_setdc1(moteurG);
+"44
+[e ( _pwm_setdc1 (1 -> _moteurG `ui ]
+[; ;main.c: 45: pwm_setdc2(moteurD);
+"45
+[e ( _pwm_setdc2 (1 -> _moteurD `ui ]
+[; ;main.c: 48: lcd_position(0,0);
+"48
+[e ( _lcd_position (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+[; ;main.c: 49: lcd_printf("%3d %3d %3d %3d",n1,n2,n3,n4);
+"49
+[e ( _lcd_printf , , , , (. :s 1C _n1 _n2 _n3 _n4 ]
+[; ;main.c: 50: lcd_position(1,0);
+"50
+[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;main.c: 51: lcd_printf("MG %4d",(int) moteurG);
+"51
+[e ( _lcd_printf , (. :s 2C -> _moteurG `i ]
+[; ;main.c: 52: lcd_position(1,8);
+"52
+[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 8 `i `uc ]
+[; ;main.c: 53: lcd_printf("MD %4d",(int) moteurD);
+"53
+[e ( _lcd_printf , (. :s 3C -> _moteurD `i ]
+[; ;main.c: 55: if (finDeCourse == 0)
+"55
+[e $ ! == _finDeCourse -> 0 `i 367  ]
+[; ;main.c: 56: {
+"56
+{
+[; ;main.c: 57: moteurG = 0;
+"57
+[e = _moteurG -> -> 0 `i `d ]
+[; ;main.c: 58: moteurD = 0;
+"58
+[e = _moteurD -> -> 0 `i `d ]
+[; ;main.c: 59: lcd_position(1,0);
+"59
+[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;main.c: 60: lcd_printf("MG %4d",(int) moteurG);
+"60
+[e ( _lcd_printf , (. :s 4C -> _moteurG `i ]
+[; ;main.c: 61: lcd_position(1,8);
+"61
+[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 8 `i `uc ]
+[; ;main.c: 62: lcd_printf("MD %4d",(int) moteurD);
+"62
+[e ( _lcd_printf , (. :s 5C -> _moteurD `i ]
+[; ;main.c: 63: break;
+"63
+[e $U 365  ]
+"64
 }
 [e :U 367 ]
-[; ;main.c: 41: }
-[; ;main.c: 43: if ((n1<200)&& (n4>200))
-"43
-[e $ ! && < _n1 -> 200 `i > _n4 -> 200 `i 368  ]
-[; ;main.c: 44: {
-"44
-{
-[; ;main.c: 45: OpenTimer0( 0b11111111 &
-[; ;main.c: 46: 0b10111111 &
-[; ;main.c: 47: 0b11011111 &
-[; ;main.c: 48: 0b11110111);
-"48
-[e ( _OpenTimer0 (1 -> & & & -> 255 `i -> 191 `i -> 223 `i -> 247 `i `uc ]
-"49
-}
-[e :U 368 ]
-[; ;main.c: 49: }
-[; ;main.c: 51: while ((ReadTimer0()>3750) || ((n2>400) && (n3>400))) ;
-"51
-[e $U 369  ]
-[e :U 370 ]
-[e :U 369 ]
-[e $ || > ( _ReadTimer0 ..  -> -> 3750 `i `ui && > _n2 -> 400 `i > _n3 -> 400 `i 370  ]
-[e :U 371 ]
-[; ;main.c: 52: {
-"52
-{
-[; ;main.c: 53: CloseTimer0();
-"53
-[e ( _CloseTimer0 ..  ]
-[; ;main.c: 54: timer=ReadTimer0();
-"54
-[e = _timer -> ( _ReadTimer0 ..  `i ]
-[; ;main.c: 55: n2=adc_read(3);
-"55
-[e = _n2 ( _adc_read (1 -> -> 3 `i `uc ]
-[; ;main.c: 56: n3=adc_read(4);
-"56
-[e = _n3 ( _adc_read (1 -> -> 4 `i `uc ]
-[; ;main.c: 57: pwm_setdc1(0);
-"57
-[e ( _pwm_setdc1 (1 -> -> 0 `i `ui ]
-[; ;main.c: 58: pwm_setdc2(180);
-"58
-[e ( _pwm_setdc2 (1 -> -> 180 `i `ui ]
-[; ;main.c: 60: lcd_position(0,0);
-"60
-[e ( _lcd_position (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-[; ;main.c: 61: lcd_printf("%3d %7d %3d",n1,n2,n3,n4);
-"61
-[e ( _lcd_printf , , , , (. :s 1C _n1 _n2 _n3 _n4 ]
-[; ;main.c: 62: lcd_position(1,0);
-"62
-[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-[; ;main.c: 63: lcd_printf("MG %4d",(int) moteurG);
-"63
-[e ( _lcd_printf , (. :s 2C -> _moteurG `i ]
-[; ;main.c: 64: lcd_position(1,8);
-"64
-[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 8 `i `uc ]
-[; ;main.c: 65: lcd_printf("MD %4d",(int) moteurD);
 "65
-[e ( _lcd_printf , (. :s 3C -> _moteurD `i ]
+}
+[e :U 363 ]
+"26
+[e $U 364  ]
+[e :U 365 ]
+[; ;main.c: 64: }
+[; ;main.c: 65: }
+[; ;main.c: 66: return;
 "66
-}
-[; ;main.c: 66: }
-[; ;main.c: 68: moteurG = vitesseMax * (1023-(double)n3)/1024;
-"68
-[e = _moteurG / * -> _vitesseMax `d - -> -> 1023 `i `d -> _n3 `d -> -> 1024 `i `d ]
-[; ;main.c: 69: moteurD = vitesseMax * (1023-(double)n2)/1024;
-"69
-[e = _moteurD / * -> _vitesseMax `d - -> -> 1023 `i `d -> _n2 `d -> -> 1024 `i `d ]
-[; ;main.c: 71: pwm_setdc1(moteurG);
-"71
-[e ( _pwm_setdc1 (1 -> _moteurG `ui ]
-[; ;main.c: 72: pwm_setdc2(moteurD);
-"72
-[e ( _pwm_setdc2 (1 -> _moteurD `ui ]
-[; ;main.c: 75: lcd_position(0,0);
-"75
-[e ( _lcd_position (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-[; ;main.c: 76: lcd_printf("%3d %3d %3d %3d",n1,n2,n3,n4);
-"76
-[e ( _lcd_printf , , , , (. :s 4C _n1 _n2 _n3 _n4 ]
-[; ;main.c: 77: lcd_position(1,0);
-"77
-[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-[; ;main.c: 78: lcd_printf("MG %4d",(int) moteurG);
-"78
-[e ( _lcd_printf , (. :s 5C -> _moteurG `i ]
-[; ;main.c: 79: lcd_position(1,8);
-"79
-[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 8 `i `uc ]
-[; ;main.c: 80: lcd_printf("MD %4d",(int) moteurD);
-"80
-[e ( _lcd_printf , (. :s 6C -> _moteurD `i ]
-[; ;main.c: 82: if (finDeCourse == 0)
-"82
-[e $ ! == _finDeCourse -> 0 `i 372  ]
-[; ;main.c: 83: {
-"83
-{
-[; ;main.c: 84: moteurG = 0;
-"84
-[e = _moteurG -> -> 0 `i `d ]
-[; ;main.c: 85: moteurD = 0;
-"85
-[e = _moteurD -> -> 0 `i `d ]
-[; ;main.c: 86: lcd_position(1,0);
-"86
-[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-[; ;main.c: 87: lcd_printf("MG %4d",(int) moteurG);
-"87
-[e ( _lcd_printf , (. :s 7C -> _moteurG `i ]
-[; ;main.c: 88: lcd_position(1,8);
-"88
-[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 8 `i `uc ]
-[; ;main.c: 89: lcd_printf("MD %4d",(int) moteurD);
-"89
-[e ( _lcd_printf , (. :s 8C -> _moteurD `i ]
-[; ;main.c: 90: break;
-"90
-[e $U 366  ]
-"91
-}
-[e :U 372 ]
-"92
-}
-[e :U 364 ]
-"28
-[e $U 365  ]
-[e :U 366 ]
-[; ;main.c: 91: }
-[; ;main.c: 92: }
-[; ;main.c: 93: return;
-"93
-[e $UE 363  ]
-[; ;main.c: 94: }
-"94
-[e :UE 363 ]
+[e $UE 362  ]
+[; ;main.c: 67: }
+"67
+[e :UE 362 ]
 }
 [a 2C 77 71 32 37 52 100 0 ]
-[a 5C 77 71 32 37 52 100 0 ]
-[a 7C 77 71 32 37 52 100 0 ]
+[a 4C 77 71 32 37 52 100 0 ]
 [a 3C 77 68 32 37 52 100 0 ]
-[a 6C 77 68 32 37 52 100 0 ]
-[a 8C 77 68 32 37 52 100 0 ]
-[a 1C 37 51 100 32 37 55 100 32 37 51 100 0 ]
-[a 4C 37 51 100 32 37 51 100 32 37 51 100 32 37 51 100 0 ]
+[a 5C 77 68 32 37 52 100 0 ]
+[a 1C 37 51 100 32 37 51 100 32 37 51 100 32 37 51 100 0 ]
