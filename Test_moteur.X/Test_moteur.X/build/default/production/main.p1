@@ -39,14 +39,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PORTEbits `VS115 ~T0 @X0 0 e@3972 ]
 "50 iut_pwm.h
 [v _pwm_init `(v ~T0 @X0 0 ef2`uc`uc ]
-"55 iut_timers.h
-[v _OpenTimer0 `(v ~T0 @X0 0 ef1`uc ]
-"67 iut_pwm.h
+"67
 [v _pwm_setdc1 `(v ~T0 @X0 0 ef1`ui ]
 "78
 [v _pwm_setdc2 `(v ~T0 @X0 0 ef1`ui ]
-"57 iut_timers.h
-[v _ReadTimer0 `(ui ~T0 @X0 0 ef ]
 "79 iut_lcd.h
 [v _lcd_position `(v ~T0 @X0 0 ef2`uc`uc ]
 "103
@@ -3575,483 +3571,158 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;iut_pwm.h: 50: void pwm_init(unsigned char period, char nb_canaux);
 [; ;iut_pwm.h: 67: void pwm_setdc1(unsigned int cycles_etat_haut);
 [; ;iut_pwm.h: 78: void pwm_setdc2(unsigned int cycles_etat_haut);
-[; ;iut_timers.h: 18: union Timers
-[; ;iut_timers.h: 19: {
-[; ;iut_timers.h: 20: unsigned int lt;
-[; ;iut_timers.h: 21: char bt[2];
-[; ;iut_timers.h: 22: };
-[; ;iut_timers.h: 55: void OpenTimer0 ( unsigned char config);
-[; ;iut_timers.h: 56: void CloseTimer0 (void);
-[; ;iut_timers.h: 57: unsigned int ReadTimer0 (void);
-[; ;iut_timers.h: 58: void WriteTimer0 ( unsigned int timer0);
-[; ;iut_timers.h: 78: void OpenTimer1 ( unsigned char config);
-[; ;iut_timers.h: 79: void CloseTimer1 (void);
-[; ;iut_timers.h: 80: unsigned int ReadTimer1 (void);
-[; ;iut_timers.h: 81: void WriteTimer1 ( unsigned int timer1);
-[; ;iut_timers.h: 108: void OpenTimer2 ( unsigned char config);
-[; ;iut_timers.h: 109: void CloseTimer2 (void);
-[; ;iut_timers.h: 110: unsigned char ReadTimer2 (void);
-[; ;iut_timers.h: 138: void OpenTimer3 ( unsigned char config);
-[; ;iut_timers.h: 139: void CloseTimer3 (void);
-[; ;iut_timers.h: 140: unsigned int ReadTimer3 (void);
-[; ;iut_timers.h: 141: void WriteTimer3 ( unsigned int timer3);
 [v $root$_main `(v ~T0 @X0 0 e ]
-"14 main.c
+"13 main.c
 [v _main `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 14: void main(void) {
+[; ;main.c: 13: void main(void) {
 [e :U _main ]
 [f ]
-"16
+"15
 [v _n1 `i ~T0 @X0 1 a ]
 [v _n2 `i ~T0 @X0 1 a ]
 [v _n3 `i ~T0 @X0 1 a ]
 [v _n4 `i ~T0 @X0 1 a ]
-[; ;main.c: 16: int n1,n2,n3,n4;
-[; ;main.c: 17: adc_init(5);
-"17
+[; ;main.c: 15: int n1,n2,n3,n4;
+[; ;main.c: 16: adc_init(5);
+"16
 [e ( _adc_init (1 -> -> 5 `i `uc ]
-[; ;main.c: 18: lcd_init();
-"18
+[; ;main.c: 17: lcd_init();
+"17
 [e ( _lcd_init ..  ]
-"19
+"18
 [v _finDeCourse `i ~T0 @X0 1 a ]
-[; ;main.c: 19: int finDeCourse=1, debutDeCourse;
+[; ;main.c: 18: int finDeCourse=1, debutDeCourse;
 [e = _finDeCourse -> 1 `i ]
 [v _debutDeCourse `i ~T0 @X0 1 a ]
+"19
+[v _moteurG `d ~T0 @X0 1 a ]
+[v _moteurD `d ~T0 @X0 1 a ]
 "20
-[v _etat `i ~T0 @X0 1 a ]
-[; ;main.c: 20: int etat=0;
-[e = _etat -> 0 `i ]
-"21
-[v _Vitesse `i ~T0 @X0 1 a ]
-[; ;main.c: 21: int Vitesse=1.5;
-[e = _Vitesse -> .1.5 `i ]
-[; ;main.c: 23: TRISEbits.TRISE1 = 1;
-"23
+[v _vitesseMax `i ~T0 @X0 1 a ]
+[; ;main.c: 19: double moteurG, moteurD;
+[; ;main.c: 20: int vitesseMax = 200;
+[e = _vitesseMax -> 200 `i ]
+[; ;main.c: 22: TRISEbits.TRISE1 = 1;
+"22
 [e = . . _TRISEbits 0 1 -> -> 1 `i `uc ]
-[; ;main.c: 24: TRISEbits.TRISE2 = 1;
-"24
+[; ;main.c: 23: TRISEbits.TRISE2 = 1;
+"23
 [e = . . _TRISEbits 0 2 -> -> 1 `i `uc ]
-[; ;main.c: 27: while(1)
+[; ;main.c: 26: while(1)
+"26
+[e :U 364 ]
+[; ;main.c: 27: {
 "27
-[e :U 365 ]
-[; ;main.c: 28: {
+{
+[; ;main.c: 28: n1=adc_read(1);
 "28
-{
-[; ;main.c: 29: n1=adc_read(1);
-"29
 [e = _n1 ( _adc_read (1 -> -> 1 `i `uc ]
-[; ;main.c: 30: n2=adc_read(3);
-"30
+[; ;main.c: 29: n2=adc_read(3);
+"29
 [e = _n2 ( _adc_read (1 -> -> 3 `i `uc ]
-[; ;main.c: 31: n3=adc_read(4);
-"31
+[; ;main.c: 30: n3=adc_read(4);
+"30
 [e = _n3 ( _adc_read (1 -> -> 4 `i `uc ]
-[; ;main.c: 32: n4=adc_read(5);
-"32
+[; ;main.c: 31: n4=adc_read(5);
+"31
 [e = _n4 ( _adc_read (1 -> -> 5 `i `uc ]
-[; ;main.c: 34: debutDeCourse = PORTEbits.RE1;
-"34
+[; ;main.c: 33: debutDeCourse = PORTEbits.RE1;
+"33
 [e = _debutDeCourse -> . . _PORTEbits 0 1 `i ]
-[; ;main.c: 35: finDeCourse = PORTEbits.RE2 ;
-"35
+[; ;main.c: 34: finDeCourse = PORTEbits.RE2;
+"34
 [e = _finDeCourse -> . . _PORTEbits 0 2 `i ]
-[; ;main.c: 37: if (debutDeCourse == 1)
+[; ;main.c: 36: if (debutDeCourse == 1)
+"36
+[e $ ! == _debutDeCourse -> 1 `i 366  ]
+[; ;main.c: 37: {
 "37
-[e $ ! == _debutDeCourse -> 1 `i 367  ]
-[; ;main.c: 38: {
-"38
 {
-[; ;main.c: 39: pwm_init (150,2);
-"39
+[; ;main.c: 38: pwm_init (150,2);
+"38
 [e ( _pwm_init (2 , -> -> 150 `i `uc -> -> 2 `i `uc ]
-"40
+"39
+}
+[e :U 366 ]
+[; ;main.c: 39: }
+[; ;main.c: 41: moteurG = vitesseMax * (1023-(double)n3)/1024;
+"41
+[e = _moteurG / * -> _vitesseMax `d - -> -> 1023 `i `d -> _n3 `d -> -> 1024 `i `d ]
+[; ;main.c: 42: moteurD = vitesseMax * (1023-(double)n2)/1024;
+"42
+[e = _moteurD / * -> _vitesseMax `d - -> -> 1023 `i `d -> _n2 `d -> -> 1024 `i `d ]
+[; ;main.c: 44: pwm_setdc1(moteurG);
+"44
+[e ( _pwm_setdc1 (1 -> _moteurG `ui ]
+[; ;main.c: 45: pwm_setdc2(moteurD);
+"45
+[e ( _pwm_setdc2 (1 -> _moteurD `ui ]
+[; ;main.c: 48: lcd_position(0,0);
+"48
+[e ( _lcd_position (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+[; ;main.c: 49: lcd_printf("%3d %3d %3d %3d",n1,n2,n3,n4);
+"49
+[e ( _lcd_printf , , , , (. :s 1C _n1 _n2 _n3 _n4 ]
+[; ;main.c: 50: lcd_position(1,0);
+"50
+[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;main.c: 51: lcd_printf("MG %4d",(int) moteurG);
+"51
+[e ( _lcd_printf , (. :s 2C -> _moteurG `i ]
+[; ;main.c: 52: lcd_position(1,8);
+"52
+[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 8 `i `uc ]
+[; ;main.c: 53: lcd_printf("MD %4d",(int) moteurD);
+"53
+[e ( _lcd_printf , (. :s 3C -> _moteurD `i ]
+[; ;main.c: 55: if (finDeCourse == 0)
+"55
+[e $ ! == _finDeCourse -> 0 `i 367  ]
+[; ;main.c: 56: {
+"56
+{
+[; ;main.c: 57: moteurG = 0;
+"57
+[e = _moteurG -> -> 0 `i `d ]
+[; ;main.c: 58: moteurD = 0;
+"58
+[e = _moteurD -> -> 0 `i `d ]
+[; ;main.c: 59: lcd_position(1,0);
+"59
+[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;main.c: 60: lcd_printf("MG %4d",(int) moteurG);
+"60
+[e ( _lcd_printf , (. :s 4C -> _moteurG `i ]
+[; ;main.c: 61: lcd_position(1,8);
+"61
+[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 8 `i `uc ]
+[; ;main.c: 62: lcd_printf("MD %4d",(int) moteurD);
+"62
+[e ( _lcd_printf , (. :s 5C -> _moteurD `i ]
+[; ;main.c: 63: break;
+"63
+[e $U 365  ]
+"64
 }
 [e :U 367 ]
-[; ;main.c: 40: }
-[; ;main.c: 42: if (finDeCourse == 0)
-"42
-[e $ ! == _finDeCourse -> 0 `i 368  ]
-[; ;main.c: 43: {
-"43
-{
-[; ;main.c: 44: etat=2;
-"44
-[e = _etat -> 2 `i ]
-"45
-}
-[e :U 368 ]
-[; ;main.c: 45: }
-[; ;main.c: 47: if ((n1<200)&& (n4>200))
-"47
-[e $ ! && < _n1 -> 200 `i > _n4 -> 200 `i 369  ]
-[; ;main.c: 48: {
-"48
-{
-[; ;main.c: 49: OpenTimer0( 0b11111111 &
-[; ;main.c: 50: 0b10111111 &
-[; ;main.c: 51: 0b11011111 &
-[; ;main.c: 52: 0b11110111);
-"52
-[e ( _OpenTimer0 (1 -> & & & -> 255 `i -> 191 `i -> 223 `i -> 247 `i `uc ]
-"53
-}
-[e :U 369 ]
-[; ;main.c: 53: }
-[; ;main.c: 60: switch (etat)
-"60
-[e $U 371  ]
-[; ;main.c: 61: {
-"61
-{
-[; ;main.c: 62: case 0:
-"62
-[e :U 372 ]
-[; ;main.c: 63: pwm_setdc1(150*Vitesse);
-"63
-[e ( _pwm_setdc1 (1 -> * -> 150 `i _Vitesse `ui ]
-[; ;main.c: 64: pwm_setdc2(150*Vitesse);
-"64
-[e ( _pwm_setdc2 (1 -> * -> 150 `i _Vitesse `ui ]
-[; ;main.c: 65: if (ReadTimer0()>37500) etat=31;
 "65
-[e $ ! > -> ( _ReadTimer0 ..  `l -> 37500 `l 373  ]
-[e = _etat -> 31 `i ]
-[e :U 373 ]
-[; ;main.c: 66: if ((n3 > 800) && (n2 > 800)) etat=2;
+}
+[e :U 363 ]
+"26
+[e $U 364  ]
+[e :U 365 ]
+[; ;main.c: 64: }
+[; ;main.c: 65: }
+[; ;main.c: 66: return;
 "66
-[e $ ! && > _n3 -> 800 `i > _n2 -> 800 `i 374  ]
-[e = _etat -> 2 `i ]
-[e $U 375  ]
+[e $UE 362  ]
+[; ;main.c: 67: }
 "67
-[e :U 374 ]
-[; ;main.c: 67: else
-[; ;main.c: 68: {
-"68
-{
-[; ;main.c: 69: if (n3 > 200) etat=21;
-"69
-[e $ ! > _n3 -> 200 `i 376  ]
-[e = _etat -> 21 `i ]
-[e :U 376 ]
-[; ;main.c: 70: if (n2 > 200) etat=11;
-"70
-[e $ ! > _n2 -> 200 `i 377  ]
-[e = _etat -> 11 `i ]
-[e :U 377 ]
-"71
+[e :UE 362 ]
 }
-[e :U 375 ]
-[; ;main.c: 71: }
-[; ;main.c: 72: break;
-"72
-[e $U 370  ]
-[; ;main.c: 73: case 2 :
-"73
-[e :U 378 ]
-[; ;main.c: 74: pwm_setdc1(000*Vitesse);
-"74
-[e ( _pwm_setdc1 (1 -> * -> 0 `i _Vitesse `ui ]
-[; ;main.c: 75: pwm_setdc2(000*Vitesse);
-"75
-[e ( _pwm_setdc2 (1 -> * -> 0 `i _Vitesse `ui ]
-[; ;main.c: 78: case 11:
-"78
-[e :U 379 ]
-[; ;main.c: 79: pwm_setdc1(150*Vitesse);
-"79
-[e ( _pwm_setdc1 (1 -> * -> 150 `i _Vitesse `ui ]
-[; ;main.c: 80: pwm_setdc2(120*Vitesse);
-"80
-[e ( _pwm_setdc2 (1 -> * -> 120 `i _Vitesse `ui ]
-[; ;main.c: 81: if (n2 > 300) etat=12;
-"81
-[e $ ! > _n2 -> 300 `i 380  ]
-[e = _etat -> 12 `i ]
-[e $U 381  ]
-"82
-[e :U 380 ]
-[; ;main.c: 82: else if (n2 < 200) etat=0;
-[e $ ! < _n2 -> 200 `i 382  ]
-[e = _etat -> 0 `i ]
-[e :U 382 ]
-"83
-[e :U 381 ]
-[; ;main.c: 83: break;
-[e $U 370  ]
-[; ;main.c: 84: case 12:
-"84
-[e :U 383 ]
-[; ;main.c: 85: pwm_setdc1(150*Vitesse);
-"85
-[e ( _pwm_setdc1 (1 -> * -> 150 `i _Vitesse `ui ]
-[; ;main.c: 86: pwm_setdc2(90*Vitesse);
-"86
-[e ( _pwm_setdc2 (1 -> * -> 90 `i _Vitesse `ui ]
-[; ;main.c: 87: if (n2 > 400) etat=13;
-"87
-[e $ ! > _n2 -> 400 `i 384  ]
-[e = _etat -> 13 `i ]
-[e $U 385  ]
-"88
-[e :U 384 ]
-[; ;main.c: 88: else if (n2 < 300) etat=11;
-[e $ ! < _n2 -> 300 `i 386  ]
-[e = _etat -> 11 `i ]
-[e :U 386 ]
-"89
-[e :U 385 ]
-[; ;main.c: 89: break;
-[e $U 370  ]
-[; ;main.c: 90: case 13:
-"90
-[e :U 387 ]
-[; ;main.c: 91: pwm_setdc1(150*Vitesse);
-"91
-[e ( _pwm_setdc1 (1 -> * -> 150 `i _Vitesse `ui ]
-[; ;main.c: 92: pwm_setdc2(60*Vitesse);
-"92
-[e ( _pwm_setdc2 (1 -> * -> 60 `i _Vitesse `ui ]
-[; ;main.c: 93: if (n2 > 500) etat=14;
-"93
-[e $ ! > _n2 -> 500 `i 388  ]
-[e = _etat -> 14 `i ]
-[e $U 389  ]
-"94
-[e :U 388 ]
-[; ;main.c: 94: else if (n2 < 400) etat=12;
-[e $ ! < _n2 -> 400 `i 390  ]
-[e = _etat -> 12 `i ]
-[e :U 390 ]
-"95
-[e :U 389 ]
-[; ;main.c: 95: break;
-[e $U 370  ]
-[; ;main.c: 96: case 14:
-"96
-[e :U 391 ]
-[; ;main.c: 97: pwm_setdc1(150*Vitesse);
-"97
-[e ( _pwm_setdc1 (1 -> * -> 150 `i _Vitesse `ui ]
-[; ;main.c: 98: pwm_setdc2(30*Vitesse);
-"98
-[e ( _pwm_setdc2 (1 -> * -> 30 `i _Vitesse `ui ]
-[; ;main.c: 99: if (n2 > 600) etat=15;
-"99
-[e $ ! > _n2 -> 600 `i 392  ]
-[e = _etat -> 15 `i ]
-[e $U 393  ]
-"100
-[e :U 392 ]
-[; ;main.c: 100: else if (n2 < 500) etat=13;
-[e $ ! < _n2 -> 500 `i 394  ]
-[e = _etat -> 13 `i ]
-[e :U 394 ]
-"101
-[e :U 393 ]
-[; ;main.c: 101: break;
-[e $U 370  ]
-[; ;main.c: 102: case 15:
-"102
-[e :U 395 ]
-[; ;main.c: 103: pwm_setdc1(150*Vitesse);
-"103
-[e ( _pwm_setdc1 (1 -> * -> 150 `i _Vitesse `ui ]
-[; ;main.c: 104: pwm_setdc2(00*Vitesse);
-"104
-[e ( _pwm_setdc2 (1 -> * -> 0 `i _Vitesse `ui ]
-[; ;main.c: 105: if (n2 < 600) etat=14;
-"105
-[e $ ! < _n2 -> 600 `i 396  ]
-[e = _etat -> 14 `i ]
-[e :U 396 ]
-[; ;main.c: 106: break;
-"106
-[e $U 370  ]
-[; ;main.c: 109: case 21:
-"109
-[e :U 397 ]
-[; ;main.c: 110: pwm_setdc1(120*Vitesse);
-"110
-[e ( _pwm_setdc1 (1 -> * -> 120 `i _Vitesse `ui ]
-[; ;main.c: 111: pwm_setdc2(150*Vitesse);
-"111
-[e ( _pwm_setdc2 (1 -> * -> 150 `i _Vitesse `ui ]
-[; ;main.c: 112: if (n3 > 300) etat=22;
-"112
-[e $ ! > _n3 -> 300 `i 398  ]
-[e = _etat -> 22 `i ]
-[e $U 399  ]
-"113
-[e :U 398 ]
-[; ;main.c: 113: else if (n3 < 200) etat=0;
-[e $ ! < _n3 -> 200 `i 400  ]
-[e = _etat -> 0 `i ]
-[e :U 400 ]
-"114
-[e :U 399 ]
-[; ;main.c: 114: break;
-[e $U 370  ]
-[; ;main.c: 115: case 22:
-"115
-[e :U 401 ]
-[; ;main.c: 116: pwm_setdc1(90*Vitesse);
-"116
-[e ( _pwm_setdc1 (1 -> * -> 90 `i _Vitesse `ui ]
-[; ;main.c: 117: pwm_setdc2(150*Vitesse);
-"117
-[e ( _pwm_setdc2 (1 -> * -> 150 `i _Vitesse `ui ]
-[; ;main.c: 118: if (n3 > 400) etat=23;
-"118
-[e $ ! > _n3 -> 400 `i 402  ]
-[e = _etat -> 23 `i ]
-[e $U 403  ]
-"119
-[e :U 402 ]
-[; ;main.c: 119: else if (n3 < 300) etat=21;
-[e $ ! < _n3 -> 300 `i 404  ]
-[e = _etat -> 21 `i ]
-[e :U 404 ]
-"120
-[e :U 403 ]
-[; ;main.c: 120: break;
-[e $U 370  ]
-[; ;main.c: 121: case 23:
-"121
-[e :U 405 ]
-[; ;main.c: 122: pwm_setdc1(60*Vitesse);
-"122
-[e ( _pwm_setdc1 (1 -> * -> 60 `i _Vitesse `ui ]
-[; ;main.c: 123: pwm_setdc2(150*Vitesse);
-"123
-[e ( _pwm_setdc2 (1 -> * -> 150 `i _Vitesse `ui ]
-[; ;main.c: 124: if (n3 > 500) etat=24;
-"124
-[e $ ! > _n3 -> 500 `i 406  ]
-[e = _etat -> 24 `i ]
-[e $U 407  ]
-"125
-[e :U 406 ]
-[; ;main.c: 125: else if (n3 < 400) etat=22;
-[e $ ! < _n3 -> 400 `i 408  ]
-[e = _etat -> 22 `i ]
-[e :U 408 ]
-"126
-[e :U 407 ]
-[; ;main.c: 126: break;
-[e $U 370  ]
-[; ;main.c: 127: case 24:
-"127
-[e :U 409 ]
-[; ;main.c: 128: pwm_setdc1(30*Vitesse);
-"128
-[e ( _pwm_setdc1 (1 -> * -> 30 `i _Vitesse `ui ]
-[; ;main.c: 129: pwm_setdc2(150*Vitesse);
-"129
-[e ( _pwm_setdc2 (1 -> * -> 150 `i _Vitesse `ui ]
-[; ;main.c: 130: if (n3 > 600) etat=25;
-"130
-[e $ ! > _n3 -> 600 `i 410  ]
-[e = _etat -> 25 `i ]
-[e $U 411  ]
-"131
-[e :U 410 ]
-[; ;main.c: 131: else if (n3 < 500) etat=23;
-[e $ ! < _n3 -> 500 `i 412  ]
-[e = _etat -> 23 `i ]
-[e :U 412 ]
-"132
-[e :U 411 ]
-[; ;main.c: 132: break;
-[e $U 370  ]
-[; ;main.c: 133: case 25:
-"133
-[e :U 413 ]
-[; ;main.c: 134: pwm_setdc1(000*Vitesse);
-"134
-[e ( _pwm_setdc1 (1 -> * -> 0 `i _Vitesse `ui ]
-[; ;main.c: 135: pwm_setdc2(150*Vitesse);
-"135
-[e ( _pwm_setdc2 (1 -> * -> 150 `i _Vitesse `ui ]
-[; ;main.c: 136: if (n3 < 600) etat=24;
-"136
-[e $ ! < _n3 -> 600 `i 414  ]
-[e = _etat -> 24 `i ]
-[e :U 414 ]
-[; ;main.c: 137: break;
-"137
-[e $U 370  ]
-[; ;main.c: 140: case 31 :
-"140
-[e :U 415 ]
-[; ;main.c: 141: pwm_setdc1(000*Vitesse);
-"141
-[e ( _pwm_setdc1 (1 -> * -> 0 `i _Vitesse `ui ]
-[; ;main.c: 142: pwm_setdc2(000*Vitesse);
-"142
-[e ( _pwm_setdc2 (1 -> * -> 0 `i _Vitesse `ui ]
-"143
-}
-[; ;main.c: 143: }
-[e $U 370  ]
-"60
-[e :U 371 ]
-[e [\ _etat , $ -> 0 `i 372
- , $ -> 2 `i 378
- , $ -> 11 `i 379
- , $ -> 12 `i 383
- , $ -> 13 `i 387
- , $ -> 14 `i 391
- , $ -> 15 `i 395
- , $ -> 21 `i 397
- , $ -> 22 `i 401
- , $ -> 23 `i 405
- , $ -> 24 `i 409
- , $ -> 25 `i 413
- , $ -> 31 `i 415
- 370 ]
-"143
-[e :U 370 ]
-[; ;main.c: 147: lcd_position(0,0);
-"147
-[e ( _lcd_position (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-[; ;main.c: 148: lcd_printf("%3d %3d %3d %3d",n1,n2,n3,n4);
-"148
-[e ( _lcd_printf , , , , (. :s 1C _n1 _n2 _n3 _n4 ]
-[; ;main.c: 149: lcd_position(1,0);
-"149
-[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-[; ;main.c: 150: lcd_printf("FDC%d",finDeCourse);
-"150
-[e ( _lcd_printf , (. :s 2C _finDeCourse ]
-[; ;main.c: 151: lcd_position(1,6);
-"151
-[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 6 `i `uc ]
-[; ;main.c: 152: lcd_printf("%2d",etat);
-"152
-[e ( _lcd_printf , (. :s 3C _etat ]
-[; ;main.c: 153: lcd_position(1,9);
-"153
-[e ( _lcd_position (2 , -> -> 1 `i `uc -> -> 9 `i `uc ]
-[; ;main.c: 154: lcd_printf("Jack%d",debutDeCourse);
-"154
-[e ( _lcd_printf , (. :s 4C _debutDeCourse ]
-"156
-}
-[e :U 364 ]
-"27
-[e $U 365  ]
-[e :U 366 ]
-[; ;main.c: 156: }
-[; ;main.c: 157: return;
-"157
-[e $UE 363  ]
-[; ;main.c: 158: }
-"158
-[e :UE 363 ]
-}
+[a 2C 77 71 32 37 52 100 0 ]
+[a 4C 77 71 32 37 52 100 0 ]
+[a 3C 77 68 32 37 52 100 0 ]
+[a 5C 77 68 32 37 52 100 0 ]
 [a 1C 37 51 100 32 37 51 100 32 37 51 100 32 37 51 100 0 ]
-[a 3C 37 50 100 0 ]
-[a 4C 74 97 99 107 37 100 0 ]
-[a 2C 70 68 67 37 100 0 ]
