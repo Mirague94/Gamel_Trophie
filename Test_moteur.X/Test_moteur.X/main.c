@@ -17,10 +17,11 @@ void main(void) {
     lcd_init(); //initialiser le lcd
     int finDeCourse=1, debutDeCourse;
     double moteurG, moteurD;
-    int vitesseMax = 180;
+    double vitesseMax = 180;
     
     TRISEbits.TRISE1 = 1; // Jack sur RE1
     TRISEbits.TRISE2 = 1; // fin de course sur RE2
+    
     
     
     while(1)
@@ -29,6 +30,8 @@ void main(void) {
         n2=adc_read(3); //AN3 pin 6
         n3=adc_read(4); //AN4 pin 10
         n4=adc_read(5); //AN5 pin 12
+        
+        vitesseMax = adc_read(0)/1023.0*600.0;
         
         debutDeCourse = PORTEbits.RE1; //lecture sur RE2, pin 11 (Jack)
         finDeCourse = PORTEbits.RE2; //lecture Port E pin 14 (FDC)
@@ -48,18 +51,24 @@ void main(void) {
         lcd_position(0,0);
         lcd_printf("%3d %3d %3d %3d",n1,n2,n3,n4); // Capteur
         lcd_position(1,0);
-        lcd_printf("MG %4d",(int) moteurG); // fin de course
-        lcd_position(1,8);
-        lcd_printf("MD %4d",(int) moteurD); // Jack
+        lcd_printf("%4d",(int) moteurG); // moteur gauche
+        lcd_position(1,5);
+        lcd_printf("%4d",(int) vitesseMax); // vitesse max
+        lcd_position(1,10);
+        lcd_printf("%4d",(int) moteurD); // moteur droit
+
         
         if (finDeCourse == 0)
         {
             moteurG = 0;
             moteurD = 0;
             lcd_position(1,0);
-            lcd_printf("MG %4d",(int) moteurG); // fin de course
-            lcd_position(1,8);
-            lcd_printf("MD %4d",(int) moteurD); // Jack
+            lcd_printf("%4d",(int) moteurG); // moteur gauche
+            lcd_position(1,5);
+            lcd_printf("%4d",(int) vitesseMax); // moteur droit
+            lcd_position(1,10);
+            lcd_printf("%4d",(int) moteurD); // moteur droit
+
             break;
         } 
     }
